@@ -1,0 +1,38 @@
+<?
+/**
+ * hook_form_alter Add price to add to cart form
+ */
+function form_hooks_form_alter(&$form, &$form_state, $form_id) {
+	if (strpos($form_id, 'user_register_form') !== FALSE){
+		$form['field_first_name']['#attributes']['class'][] = "col-sm-6";
+		$form['field_first_name']['#attributes']['class'][] = "col-md-4";
+		$form['field_last_name']['#attributes']['class'][] = "col-sm-6";
+		$form['field_last_name']['#attributes']['class'][] = "col-md-4";		
+		$form['field_mobile']['#attributes']['class'][] = "col-sm-6";
+		$form['field_mobile']['#attributes']['class'][] = "col-md-4";	
+		
+		
+		//$form['account']['mail']['#attributes']['class'][] = "col-sm-6";
+		//$form['account']['mail']['#attributes']['class'][] = "col-md-4";			
+		//echo "<pre>";print_r($form['account']['mail']);echo "</pre>";
+	}
+	if (strpos($form_id, 'user_pass') !== FALSE){
+		$suff = t("On this e-mail we will sent you a new password.");	
+		$form['name']["#suffix"] = "<div class='suffix'>" . $suff . "</div>";
+	}
+	if (strpos($form_id, 'accomodation_node_form') !== FALSE){
+		$t= t("Upload new photos");
+		$form["field_image"]["und"]["#file_upload_title"] = "<span>" . $t . "</span>";
+		$t= t("Choose photo from my image gallery");
+		$form["field_choose_photo_from_my_image"]["und"]["#file_upload_title"] =  "<span>" . $t . "</span>";
+		$form["actions"]["submit"]['#attributes']['class'][] =  "create-list";
+		$form["actions"]["submit"]["#value"] = t("Create my list");
+	}
+}
+
+function form_hooks_search_page($results){
+	/*echo "<pre>";
+		print_r($results);
+	echo "</pre>";*/
+}
+?>
