@@ -67,3 +67,6 @@ span.name.active{
 span.name:hover{
 	text-decoration: underline;
 }
+#general-details .el{
+	padding-top: 15px;
+}

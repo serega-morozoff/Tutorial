@@ -40,7 +40,7 @@
 		var name = ele.val();
 		if(name != ""){
 			locations.push(name);
-			$(".form-search #locations").prepend("<div class='item'><input title='" + name + "' data-toggle='tooltip' name='search-item' type='text' value='" + name + "'><span class='close' title='Delete' data-toggle='tooltip'></span></div>");
+			$("#locations").prepend("<div class='item'><input title='" + name + "' data-toggle='tooltip' name='search-item' type='text' value='" + name + "'><span class='close' title='Delete' data-toggle='tooltip'></span></div>");
 			setTimeout(function(){$('[data-toggle="tooltip"]').tooltip()}, 500);
 			$(ele).val("");
 			console.log(locations);
@@ -66,7 +66,7 @@
 	
 	jQuery(document).ajaxComplete(function(event, xhr, settings) {
     
-		if($("body").hasClass("page-node-49")){
+		if($("body").hasClass("page-node-49") || $("body").hasClass("page-node-84")){
 			showUpload();
 			showMediaUpload();
 		}
@@ -108,17 +108,131 @@
 
 	}
 	
+	function getFlatmatesData(){
+			console.log(locations);
+			var locationsString = locations.join("_");
+			var locationsStringType;
+
+				locationsString += "_flatmates";
+				locationsStringType += "flatmates";
+
+			var gender, sort, minRent, maxRent, minAge, maxAge, acomodationTypes, minStay, maxStay, peopleTypes, professions, roomType, bathroomType, furnishing, features;			
+			gender = $("#search-flatmates select[name=gender] option:selected").val();
+			if(gender == "any"){gender = "";}
+			sort = $("#search-flatmates select[name=sort-priority] option:selected").val();
+			var minRent_ = $("#search-flatmates select[name=min-rent] option:selected").val();
+			var maxRent_ = $("#search-flatmates select[name=max-rent] option:selected").val();
+			acomodationTypes = $("#search-flatmates select[name=preferred-accomodation] option:selected").val();
+			peopleTypes = $("#search-flatmates select[name=people-type] option:selected").val();
+			professions = $("#search-flatmates select[name=professions-type] option:selected").val();
+			var minAge_ = $("#search-flatmates input.min_age").val();
+			var maxAge_ = $("#search-flatmates input.max_age").val();
+			var minStay_ = $("#search-flatmates input.min_stay").val();
+			var maxStay_ = $("#search-flatmates input.max_stay").val();			
+			$.cookie("searchType", locationsStringType, { path:'/' });
+			$.cookie("searchVal", locationsString, { path:'/' });
+			$.cookie("sort_f", sort, { path:'/' });
+			$.cookie("gender_f", gender, { path:'/' });
+			$.cookie("minRent_f", minRent_, { path:'/' });
+			$.cookie("maxRent_f", maxRent_, { path:'/' });
+			$.cookie("acomodationTypes_f", acomodationTypes, { path:'/' });
+			$.cookie("peopleTypes_f", peopleTypes, { path:'/' });
+			$.cookie("professions_f", professions, { path:'/' });
+			$.cookie("minAge_f", minAge_, { path:'/' });
+			$.cookie("maxAge_f", maxAge_, { path:'/' });
+			$.cookie("minStay_f", minStay_, { path:'/' });
+			$.cookie("maxStay_f", maxStay_, { path:'/' });			
+			console.log("gender " + gender + ", sort " + sort + ", minRent_ " + minRent_ + ", maxRent_ " + maxRent_);
+			console.log("acomodationTypes " + acomodationTypes + ", peopleTypes " + peopleTypes + ", professions " + professions + ", minAge_ " + minAge_);
+			console.log("maxAge_ " + maxAge_ + ", minStay_ " + minStay_ + ", maxStay_ " + maxStay_);
+			window.location.href = "/search/node";	
+	}
+	
+	function getRoomsData(){
+			var sort, minRent_, maxRent_, gender, roomType, bathroomType, furnishing, stayLength, 
+			acomodationTypes, features;
+			console.log(locations);
+			var locationsString = locations.join("_");
+			var locationsStringType;
+
+				locationsString += "_rooms";
+				locationsStringType += "rooms";
+			sort = $("#search-rooms select[name=sort-priority] option:selected").val();
+			minRent_ = $("#search-rooms select[name=min-rent] option:selected").val();//
+			maxRent_ = $("#search-rooms select[name=max-rent] option:selected").val();//
+			gender = $("#search-rooms select[name=gender] option:selected").val();//
+			if(gender == "any"){gender = "";}							
+			roomType = $("#search-rooms select[name=room-type] option:selected").val();
+			bathroomType = $("#search-rooms select[name=bathroom-type] option:selected").val();
+			furnishing = $("#search-rooms select[name=furnishing] option:selected").val();
+			stayLength = $("#search-rooms select[name='preffered-stay-length'] option:selected").val();
+			acomodationTypes = $("#search-rooms select[name='preferred-accomodation'] option:selected").val();
+			if(parseInt(minRent_) > parseInt(maxRent_)){
+				minRent = maxRent_;
+				maxRent = minRent_;
+			}else{
+				minRent = minRent_;
+				maxRent = maxRent_;								
+			}								
+			$(".checkbox input[type=checkbox]").each(
+				function(){
+					if($(this).is(':checked')){
+						features +=	$(this).val() + "_";
+					}
+				}
+			);	
+			$.cookie("searchType", locationsStringType, { path:'/' });
+			$.cookie("searchVal", locationsString, { path:'/' });
+			$.cookie("sort_r", sort, { path:'/' });
+			$.cookie("gender_r", gender, { path:'/' });
+			$.cookie("minRent_r", minRent_, { path:'/' });
+			$.cookie("maxRent_r", maxRent_, { path:'/' });
+			$.cookie("acomodationTypes_r", acomodationTypes, { path:'/' });
+			$.cookie("roomType_r", roomType, { path:'/' });
+			$.cookie("bathroomType_r", bathroomType, { path:'/' });
+			$.cookie("furnishing_r", furnishing, { path:'/' });
+			$.cookie("stayLength_r", stayLength, { path:'/' });
+			$.cookie("features_r", features, { path:'/' });
+			console.log("sort_r " + sort);
+			console.log("gender_r " + gender);
+			console.log("minRent_r " + minRent);
+			console.log("maxRent_r " + maxRent);
+			console.log("acomodationTypes_r " + acomodationTypes);
+			console.log("roomType_r " + roomType);
+			console.log("bathroomType_r " + bathroomType);
+			console.log("furnishing_r " + furnishing);
+			console.log("stayLength_r " + stayLength);
+			console.log("features_r " + features);
+			console.log("locationsString " + locationsString);
+			window.location.href = "/search/node";
+	}
+
   Drupal.behaviors.social_login = {
     attach: function (context, settings) {
-			getLocationsFront();
+			if($('body').hasClass("page-node-84")){
+				$("#edit-field-rooms-und-actions button").mousedown();
+			}
+			$(document).on('click', '.front .form-action.flatmates button', function(){
+				getFlatmatesData();
+			});			
+			$(document).on('click', '.front .form-action.rooms button', function(){
+				getRoomsData();
+			});
 			$("#search-block-form input[type='text']").click(
 				function(){
-					$(".form-search .prefix").fadeIn(100);
-				}
-			);
-			$("#search-block-form #close").click(
-				function(){
-					$(".form-search .prefix").fadeOut(100);
+					if($.cookie("searchType") !== undefined){
+						var searchType = $.cookie("searchType");
+						$(".form-search .prefix").fadeIn(100);
+						if(searchType.indexOf("flatmates") > 0){
+							$(".switch.flatmates").click();
+							$(".switch.flatmates").addClass("active");
+						}else{
+							$(".switch.rooms").click();
+							$(".switch.rooms").addClass("active");						
+						}
+					}else{
+						$(".form-search .prefix").fadeIn(100);
+					}
 				}
 			);
 			$("#switcher .switch").click(
@@ -127,6 +241,7 @@
 					$(this).addClass("active");
 				}
 			);
+			getLocationsFront();
 			$('[data-toggle="tooltip"]').tooltip(); 
 			$('#overlay, #close').click(
 				function(){
@@ -165,6 +280,7 @@
 					});
 					
 			});
+			
 			if($('#g_autocomplete').length > 0){
 				 var autocomplete = new google.maps.places.Autocomplete(
 							/** @type {!HTMLInputElement} */(document.getElementById('g_autocomplete')),
@@ -172,6 +288,14 @@
 								types: ['geocode'],
 								componentRestrictions: {country: "au"}
 							});
+			}
+			if($("#edit-field-address-und-0-value").length > 0){
+				 var autocomplete = new google.maps.places.Autocomplete(
+							/** @type {!HTMLInputElement} */(document.getElementById('edit-field-address-und-0-value')),
+							{
+								types: ['geocode'],
+								componentRestrictions: {country: "au"}
+							});				
 			}
 			if($('#search-code-input').length > 0){
 				 var autocomplete = new google.maps.places.Autocomplete(
@@ -207,6 +331,10 @@
 				var ele = $(this);
 				addMoreAccomodation(ele);
 			});
+			$(document).on('click', '#search-block-form #close', function(){
+					$(".form-search .prefix").fadeOut(100);
+				}
+			);			
 			$(document).on('click', '#create-preferred-accomodation .selected .item span', function(){ 
 				var name = $(this).prev().val();
 				$("#create-preferred-accomodation select").find("option:contains('"+name+"')").removeAttr("disabled");
@@ -217,7 +345,7 @@
 				var ele = $(this);
 				addMoreLocation(ele);
 			});
-			$("#g_autocomplete").one( "change",	function(){
+			$("#g_autocomplete.accomodation").one( "change",	function(){
 					var ele = $(this);
 					setTimeout(
 						function(){
@@ -225,7 +353,24 @@
 						}, 500
 					)
 				}
-			);			
+			);	
+
+			$("#edit-field-address-und-0-value").one( "change",	function(){
+				var geocoder = new google.maps.Geocoder();
+				var address = document.getElementById("edit-field-address-und-0-value").value;
+				geocoder.geocode({ 'address': address }, function (results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {
+								var latitude = results[0].geometry.location.lat();
+								var longitude = results[0].geometry.location.lng();
+								//alert("Latitude: " + latitude + "\nLongitude: " + longitude);
+								$("#gmap-auto1map-locpick_latitude0").val(latitude);
+								$("#gmap-auto1map-locpick_longitude0").val(longitude);
+								$(".form-item-field-rooms-und-form-title input").val($(".field-name-field-address input").val());
+						} else {
+								//alert("Request failed.")
+						}
+				});		
+			});			
 
 			$(document).on('click', '#locations .item span', function(){ 
 					var name = $(this).parent().find("input").val();
@@ -238,10 +383,72 @@
 					setTimeout(
 						function(){
 							addMoreLocationFront(ele);
+							/*if($("#advanced").length == 0){
+
+
+							}*/
 						}, 500
 					)
 				}
 			);
+			
+			$(document).on('click', '.switch.rooms', function(){
+				$( "#advanced-search" ).load( "/advanced-filters #advanced", function(){
+					
+					$("select[name='sort-priority'] :contains('" + $.cookie("sort_r") + "')").attr("selected", "selected");
+					$("select[name='min-rent'] :contains('" + $.cookie("minRent_r") + "')").attr("selected", "selected");
+					$("select[name='max-rent'] :contains('" + $.cookie("maxRent_r") + "')").attr("selected", "selected");
+					$("select[name='gender'] :contains('" + $.cookie("gender_r") + "')").attr("selected", "selected");
+					$("select[name='room-type'] [value='" + $.cookie("roomType_r") + "']").attr("selected", "selected");
+					$("select[name='bathroom-type'] [value='" + $.cookie("bathroomType_r") + "']").attr("selected", "selected");
+					$("select[name='furnishing'] [value='" + $.cookie("furnishing_r") + "']").attr("selected", "selected");
+					$("select[name='preffered-stay-length'] [value='" + $.cookie("stayLength_r") + "']").attr("selected", "selected");
+					$("select[name='preferred-accomodation'] [value='" + $.cookie("acomodationTypes_r") + "']").attr("selected", "selected");
+					console.log("Features " + $.cookie("features_r"));
+					console.log($.cookie("features_r"));
+					if($.cookie("features_r") != "" && $.cookie("features_r") !== undefined){
+						var features_mass = $.cookie("features_r").split("_");
+						console.log(features_mass);
+						$.each(features_mass, function(i, val) {
+							$(".checkbox input[type=checkbox]").each(
+								function(){
+									if($(this).val() == val){
+										$(this).attr('checked',true)
+									}
+								}
+							);	
+						});
+					}
+					
+					$("select[name='sort-priority'] :contains('" + $.cookie("sort_f") + "')").attr("selected", "selected");
+					
+					$("SELECT").selectBox();
+				} );	
+			})					
+			
+			$(document).on('click', '.switch.flatmates', function(){
+				if($(this))
+					$( "#advanced-search" ).load( "/advanced-filters-flatmates #advanced", function(){
+						//alert($.cookie("sort_f"));
+						$("select[name='sort-priority'] :contains('" + $.cookie("sort_f") + "')").attr("selected", "selected");
+						$("select[name='gender'] :contains('" + $.cookie("gender_f") + "')").attr("selected", "selected");
+						$("select[name='min-rent'] :contains('" + $.cookie("minRent_f") + "')").attr("selected", "selected");
+						$("select[name='max-rent'] :contains('" + $.cookie("maxRent_f") + "')").attr("selected", "selected");
+						$("select[name='preferred-accomodation'] [value='" + $.cookie("acomodationTypes_f") + "']").attr("selected", "selected");
+						$("select[name='people-type'] [value='" + $.cookie("peopleTypes_f") + "']").attr("selected", "selected");
+						$("select[name='professions-type'] [value='" + $.cookie("professions_f") + "']").attr("selected", "selected");
+						$(".min_age input").val($.cookie("minAge_f"));
+						$(".max-age input").val($.cookie("maxAge_f"));						
+						$(".min_stay input").val($.cookie("minStay_f"));
+						$(".max_stay input").val($.cookie("maxStay_f"));
+						$("SELECT").selectBox();
+					} );	
+			})			
+		
+			
+			$(document).on('click', '#advanced-search .advanced-filters .title', function(){
+				$(this).parent().find(".content").toggle();
+			})
 			$(document).on('click', '#with-g-point .selected .item span', function(){ 
 					$(this).parent().detach();
 					var loc = $(this).parent().find("input").val();
@@ -334,22 +541,19 @@
 			$(document).on('click', '.ui-dialog-titlebar-close', function(){ 
 				showUpload();
 			});			
-			$(document).on('click', '.make_search', function(){
-				console.log(locations);
-				var locationsString = locations.join("_");
-				var locationsStringType;
-				if($(".switch.active").html() == "Rooms"){
-					locationsString += "_rooms";
-					locationsStringType += "rooms";
-				}else{
-					locationsString += "_flatmates";
-					locationsStringType += "flatmates";
+			if($(".upload_h").length == 0){
+				$(".group-upload-photos").prepend("<div class='upload_h'>Upload Photos</div>");
+			}
+			if($(".rooms_h").length == 0){
+				$(".field-type-entityreference.field-name-field-rooms").prepend("<div class='rooms_h'>About the room</div>");
+			}
+			$(".create-list.btn.btn-success").click(
+				function(){
+					//alert(1);
+					$(".create-property-list input#edit-title").val($("#edit-field-address-und-0-value").val());
+					//return false;
 				}
-				console.log(locationsString);
-				$.cookie("searchType", locationsStringType, { path:'/' });
-				$.cookie("searchVal", locationsString, { path:'/' });
-				window.location.href = "/search/node";
-			});
+			);
 		}
 	}
 }(jQuery));

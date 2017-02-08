@@ -6,8 +6,7 @@
  /**
  *HOOKS
  */
- function flatmates_form_search_block_form_alter(&$form, &$form_state, $form_id) {
-    // Alternative (HTML5) placeholder attribute instead of using the javascript
+function flatmates_form_search_block_form_alter(&$form, &$form_state, $form_id) {
 	$form['#suffix'] = '<div class="suffix">more then 10,000 rooms<br>and potential tenants</div>';
 	$form['search_block_form']['#attributes']['placeholder'] = t('search share accommodation or potential tenant');
 	$form['#action'] = 'search';
@@ -15,9 +14,9 @@
 	$prefix = '<div class="expanded">';
 	$prefix .= '<div id="close"></div><div id="locations"></div>';
 	$prefix .= '<div id="switcher">';
-	$prefix .= '<div class="switch rooms active">Rooms</div>';
+	$prefix .= '<div class="switch rooms">Rooms</div>';
 	$prefix .= '<div class="switch flatmates">Flatmates</div>';
-	$prefix .= '</div></div>';
+	$prefix .= '</div></div><div id="advanced-search"></div>';
 	$form['name']["#prefix"] = "<div class='prefix'>" . $prefix . "<div class='make_search'>".$search."</div></div>";	
 }
  /**
@@ -291,4 +290,25 @@ function propertyOwner(){
 	$link =  l($n, 'user/' . $room_owner->uid, array('html' => TRUE));
 	$output = "<span class='property_owner_name'>".$link."</span><span class='property_owner_status ".$room_status_class."'>".$room_status."</span>";	
 	return $output;
+}
+
+function flatmates_privatemsg_list_field__participants($variables) {
+    $thread = $variables['thread'];
+    $field = array();
+
+    if ($thread['has_tokens']) {
+        $message = privatemsg_message_load($thread['thread_id']);
+    }
+    if (!isset($message)) {
+        $message = privatemsg_message_load($thread['thread_id']);
+    }
+
+    $participants = _privatemsg_generate_user_array($thread['participants'], -4);
+
+    $field['data'] = theme('user_picture', array('account' => $message->author));
+    $field['data'] .= '<div class="user-name">'. _privatemsg_format_participants($participants, 3, TRUE).'</div>';
+
+    $field['class'] = 'privatemsg-list-participants';
+
+    return $field;
 }

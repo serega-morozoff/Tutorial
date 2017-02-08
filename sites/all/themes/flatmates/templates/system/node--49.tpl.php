@@ -69,7 +69,7 @@ global $user;
 					<div class="field-required error"><?php print t("You forgot about the required field!")?></div>
 					<label for="represent-who" class="control-label required"><?php print t("Where would you like to live?"); ?><span class="form-required"> *</span></label>
 					<div class="selected"></div>
-					<input  id="g_autocomplete" type="text" />
+					<input  id="g_autocomplete" type="text" class="accomodation" />
 					<div class="add-more-wrap">
 						<span class="add-more"><?php print t("Add one more place");?></span>
 					</div>
@@ -112,9 +112,10 @@ global $user;
 	</div>
 <?php }else{ ?>
 <?php
-	$link = l("Authorize", "user");
+	header("Location: /user");
+	/*$link = l("Authorize", "user");
 	$register = t("Please "); $register.=$link; $register.= t(" to find Your accomodation");
-	$output = "<div id='please-authorize' class='center'>$register</div>";
+	$output = "<div id='please-authorize' class='center'>$register</div>";*/
 ?>
-<?php print $output;?>
+<?php //print $output;?>
 <?php } ?>

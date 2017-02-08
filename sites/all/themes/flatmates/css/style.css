@@ -100,7 +100,7 @@ header .nav > .active > a, header .menu.nav > li > a, header .menu.nav > li > a:
     color: #005c6f;
     padding-top: 0;
     padding-bottom: 0;
-	font-size: 18px;
+	font-size: 17px;
 	border-bottom: 1px solid #c2d5db;
     height: 70px;
     display: table-cell;
@@ -128,6 +128,9 @@ header .nav li.leaf:nth-child(3) a{
 }
 header .nav li.leaf:nth-child(3) a{
 	background: url(../img/bg-menu-3.png) no-repeat center;
+}
+.not_login .nav li.leaf:nth-child(3) a{
+	background: url(../img/bg-menu-5.png) no-repeat center !important;
 }
 .navbar-nav li.leaf:nth-child(4) a,
 header .nav li.leaf:nth-child(4) a{
@@ -222,6 +225,9 @@ header .nav > .active:nth-child(5) a:hover{
 	height: 113px;
 	padding-top: 12px;
 }
+.menu.nav.navbar-nav.secondary .user.login{
+	margin-right: 60px !important;
+}
 .menu.nav.navbar-nav.secondary .user.info{
 	max-width: 180px;
 }
@@ -287,7 +293,7 @@ header .nav > .active:nth-child(5) a:hover{
 /**
 *Home page Search
 **/
-#search-home{
+#search-home, .search-form{
 	clear: both;
 	background: url(../img/bg-search.png) no-repeat;
 	height: 196px;
@@ -335,7 +341,8 @@ header .nav > .active:nth-child(5) a:hover{
 	background: url(../img/bg-search-left.png) no-repeat;
 	position: relative;
 }
-#panel_search_home .suffix{
+#panel_search_home .suffix,
+#search-home .suffix{
 	font-family: 'Open Sans';
 	font-weight: 600;
 	color: #fff;
@@ -430,9 +437,17 @@ input[type='number']{
 	border-radius: 0;
 	background: url(../img/bg-input.png) repeat-x;
 	border: 1px solid #d3dee5;
-	height: 40px;
+	height: 40px !important;
 	min-width: inherit;
 }
+#block-system-main #user-register-form input[type='text'],
+#block-system-main #user-register-form input[type='password'],
+#block-system-main #user-register-form input[type='email']{
+	opacity: 1 !important;
+	display: block !important;
+	width: 100% !important;
+}
+
 .selectBox-options LI A:hover{
 	text-decoration: none;
 }
@@ -863,7 +878,7 @@ Tenant Detail Page
 #tenant-detail .pane-user-field-search-location h2,
 #tenant-detail .pane-user-field-accomodation h2,
 #tenant-detail #contact-name h2, #tenant-detail .pane-node-field-about-me h2,
-#node-form h2, label[for=edit-field-features-und], label[for=edit-field-about-me-und-0-value],
+#node-form h2, label[for=edit-field-about-me-tax-und], label[for=edit-field-features-und], label[for=edit-field-about-me-und-0-value],
 #general-details h2{
 	background: #fff url(../img/bg-tenant-about.png) no-repeat 50% 0;
 	text-align: center;
@@ -1613,6 +1628,10 @@ fieldset#edit-token{
 	padding-right: 45px;
 	text-align: right;
 }
+.page-node-49 #edit-field-image
+{
+	margin-top: 15px;
+}
 #edit-field-image .tabledrag-hide,
 #edit-field-image .tabledrag-toggle-weight{
 	display: none !important;
@@ -1804,8 +1823,10 @@ input + label[for="radio01"] span{
 }
 .checkbox label input:before {
 		content: " ";
-    width: 24px;
-    height: 24px;
+    width: 24px !important;
+    height: 24px !important;
+		display: block !important;
+		opacity: 1 !important;
     display: block;
     background: url("../img/bg-checkbox.png") no-repeat;
 		margin-top: -5px;
@@ -1813,9 +1834,18 @@ input + label[for="radio01"] span{
 
 .checkbox label input:checked:before {
 		content: " ";
-		width: 24px;
-		height: 24px;
+    width: 24px !important;
+    height: 24px !important;
+		display: block !important;
+		opacity: 1 !important;
     background: url("../img/bg-checkbox-checked.png") no-repeat;
+}
+#edit-legal-accept{
+    width: 24px !important;
+    height: 18px !important;
+		display: block !important;
+		opacity: 1 !important;	
+		top: 21px;
 }
 #edit-field-features .form-item.checkbox{
 	width: 33%;
@@ -1855,16 +1885,25 @@ input + label[for="radio01"] span{
 	position: relative;
 	text-align: center;
 }
-#edit-field-features-und, #edit-field-about-me-und{
+#edit-field-about-me-tax-und, #edit-field-features-und, #edit-field-about-me-und{
 	text-align: left;
 }
-label[for=edit-field-features-und], label[for=edit-field-about-me-und-0-value]{
+label[for=edit-field-about-me-tax-und], label[for=edit-field-features-und], label[for=edit-field-about-me-und-0-value]{
 	margin-top:15px;
 }
+.field-name-field-about-me-tax,
+.field-name-field-features{
+	position: relative;
+	clear:both;
+}
+.form-item-field-about-me-tax-und{
+	text-align: center;
+}
 #edit-field-about-me:before,
-#edit-field-features:before,
+.field-name-field-about-me-tax:before,
 #general-details:before,
-#node-form:before
+#node-form:before,
+.field-name-field-features:before
 {
 	border-bottom:1px solid #c6d7dd;
 	content: " ";
@@ -1874,7 +1913,12 @@ label[for=edit-field-features-und], label[for=edit-field-about-me-und-0-value]{
 	left:0;
 	top:93px;
 }
-#edit-field-about-me:before, #edit-field-features:before{
+#edit-field-about-me-tax-und .form-item{
+	float: left;
+	width: 33%;
+	margin-bottom: 35px;
+}
+#edit-field-about-me:before, #edit-field-features:before, .field-name-field-about-me-tax:before{
 	top: 73px;
 }
 #general-details:before{
@@ -1893,13 +1937,14 @@ label[for=edit-field-features-und], label[for=edit-field-about-me-und-0-value]{
 	margin-top: 25px;
 	background: #fff url(../img/bg-2.png) no-repeat 50% 0;
 }
-label[for=edit-field-features-und],label[for=edit-field-about-me-und-0-value]{
+label[for=edit-field-about-me-tax-und],label[for=edit-field-features-und],label[for=edit-field-about-me-und-0-value]{
 	display: inline-block;
 	margin-bottom: 30px;
 }
 label[for=edit-field-about-me-und-0-value]{
 	background: #fff url(../img/bg-4.png) no-repeat 50% 0;
 }
+label[for=edit-field-about-me-tax-und],
 label[for=edit-field-features-und]{
 	background: #fff url(../img/bg-3.png) no-repeat 50% 0;
 }
@@ -1975,4 +2020,66 @@ label[for=edit-field-features-und]{
 }
 .item .close{
 	top: 14px;
+}
+.hide{
+	display: none !important;
+}
+#user-register-form .form-item.form-item-mail{
+	position: relative;
+}
+#user-register-form .form-item.form-item-mail .tooltip.top{
+	top: 55px !important;
+	width: 240px !important;
+	left: 100% !important;
+}
+.form-item-legal-accept a,
+.form-item-legal-accept a:hover,
+.form-item-legal-accept a:focus,
+.form-item-legal-accept a:visited{
+	color: #466369;
+	font-size: 16px;
+	font-weight: 600;
+}
+.form-item-legal-accept{
+	text-align: center;
+}
+#edit-field-about-me-tax-und .checkbox:first-child{
+	margin-top: -5px;
+}
+.item{
+	position: relative;
+}
+.make_search{
+	display: none;
+}
+#advanced-search .advanced-filters .title{
+	cursor: pointer;
+}
+.advanced-filters{
+	width: 100%;
+}
+.filters{
+	padding-top: 20px;
+}
+#advanced-search .form-action button{
+	width: 100%;
+}
+input[type='number'] {
+	border-radius: 0 !important;
+	background: url(../img/bg-input.png) repeat-x !important;
+	border: 1px solid #d3dee5 !important;
+	height: 40px !important;
+	min-width: inherit !important;
+	padding-left: 10px !important;
+	padding-top: 28px !important;
+	padding-bottom: 27px !important;	
+}
+.form-item-field-rooms-und-form-title{
+	display: none !important;
+}
+.field-name-field-rooms .form-wrapper.form-group{
+	clear: both;
+}
+#legal-login{
+	text-align: center;
 }

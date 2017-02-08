@@ -34,6 +34,9 @@ function panel_searh_accomodation_detail_panels_pane_content_alter($content, $pa
 						$online = t("Online Today");
 						$logged = "<div class='is-logged'>" . $online . "</div>";
 					}
+					$role = t("Authenticated");
+					$role_class = "auth";
+					$status = "<div class='role " . $role_class . "'>" . $role . "</div>";					
 					foreach($user_ -> roles as $key=>$role){
 						if($key > 2){
 							$role_class = strtolower($role);

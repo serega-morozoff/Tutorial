@@ -4,7 +4,8 @@
 #advanced-filters{
 	clear: both;
 }
-#search-form h2.pane-title{
+#search-form h2.pane-title,
+#advanced-search h2.pane-title{
 	color: #131925;
 	font-weight: 700;
 	font-size: 36px;
@@ -35,7 +36,8 @@
 	padding-left: 15px;
 	padding-right: 15px;
 }
-#search-form .checkbox{
+#search-form .checkbox,
+#advanced-search .checkbox{
 	padding-left: 15px;
 	padding-right: 15px;
 }
@@ -49,7 +51,10 @@
 }
 #search-form  input[type="text"],
 #search-form  input[type="number"],
-#search-form  .selectBox{
+#search-form  .selectBox,
+#advanced-search  input[type="text"],
+#advanced-search  input[type="number"],
+#advanced-search  .selectBox{
 	width: 100% !important;
 }
 .right_7{
@@ -58,11 +63,13 @@
 .left_7{
 	padding-left: 15px !important;
 }
-#search-form  .checkbox label{
+#search-form  .checkbox label,
+#advanced-search  .checkbox label{
 	margin-left: 0;
 	padding-left: 30px;
 }
-#search-form {
+#search-form,
+#advanced-search {
 	max-width: 720px;
 }
 #close, .close{
@@ -73,6 +80,9 @@
 	right: 10px;
 	top: 10px;
 	cursor: pointer;
+}
+.item .close{
+	right: 10px;
 }
 #search-code{
 	padding-bottom: 20px;
@@ -101,13 +111,15 @@
 #switcher .switch.flatmates{
 	margin-left: 10px;
 }
-#search-form  .filters{
+#search-form  .filters,
+#advanced-search  .filters{
 	float: left;
 	width: 100%;
 	display: block;
 	padding-bottom: 20px;	
 }
-#search-form  #preffered-stay-length input{
+#search-form  #preffered-stay-length input,
+#advanced-search  #preffered-stay-length input{
 	padding-left: 15px;
 }
 .advanced-filters{
@@ -132,22 +144,28 @@
 	position: relative;
 	top: -12px;
 }
-#search-form  .selectBox-dropdown .selectBox-label{
+#search-form  .selectBox-dropdown .selectBox-label,
+#advanced-search  .selectBox-dropdown .selectBox-label{
 	width: 100%;
 }
-#search-form .selector{
+#search-form .selector,
+#advanced-search .selector{
 	padding-bottom: 15px;
 }
-#search-form #gender, #search-form #room_type{
+#search-form #gender, #search-form #room_type,
+#advanced-search #gender, #advanced-search #room_type{
 	padding-top: 15px;
 }
-#search-form .checkbox label{
+#search-form .checkbox label,
+#advanced-search .checkbox label{
 	padding-bottom: 30px;
 }
-#search-form .checkbox label:nth-child(2n){
+#search-form .checkbox label:nth-child(2n),
+#advanced-search .checkbox label:nth-child(2n){
 	padding-left: 45px;
 }
-#search-form .form-action{
+#search-form .form-action,
+#advanced-search .form-action{
 	width: 100%;
 	text-align: center;
 	padding-top: 23px;
@@ -155,10 +173,12 @@
 	clear: both;
 }
 #search-form .form-action button:hover,
+#advanced-search .form-action button:hover,
 .form-search .make_search:hover{
 	background: #789fbb;
 }
 #search-form .form-action button,
+#advanced-search .form-action button,
 .form-search .make_search{
 	color: #fff;
 	font-weight: 700;
@@ -174,35 +194,47 @@
 	text-align: center;
 	cursor: pointer;
 }
-#search-form .selectBox-label{
+#search-form .selectBox-label,
+#advanced-search .selectBox-label{
 	width: 100% !important;
 }
-#search-form #search-flatmates{
-	display: none;
+#search-form #search-flatmates,
+#advanced-search #search-flatmates{
+	display: block;
 }
 
 #search-form .min_age, #search-form .max_age,
 #search-form .min_rent, #search-form .max_rent, #search-form .max-age,
-#search-form .min_stay, #search-form .max_stay{
+#search-form .min_stay, #search-form .max_stay,
+#advanced-search .min_age, #advanced-search .max_age,
+#advanced-search .min_rent, #advanced-search .max_rent, #advanced-search .max-age,
+#advanced-search .min_stay, #advanced-search .max_stay{
 	padding-left: 0; padding-right: 0;
 }
 #search-form .min_stay input,
 #search-form .min_age input,
-#search-form .max-age input{
+#search-form .max-age input,
+#advanced-search .min_stay input,
+#advanced-search .min_age input,
+#advanced-search .max-age input{
 	padding-left: 15px;
 }
+#advanced-search .max-age, #advanced-search .max_rent, #advanced-search .max_stay,
 #search-form .max-age, #search-form .max_rent, #search-form .max_stay{
 	padding-left: 15px;
 }
+#advanced-search .stay,
 #search-form .stay{
 	padding-top: 25px;
 }
+#advanced-search .preferred-accomodation,
 #search-form .preferred-accomodation{
 	padding-top: 57px;
 }
 #people_type, #professions{
 	padding-top: 15px;
 }
+#advanced-search .selector.gender,
 #search-form .selector.gender{
 	padding-bottom: 0;
 }
@@ -305,4 +337,18 @@ h2.no-results{
 	text-align: center;
 	color: #005c6f;
 	text-transform: uppercase;
+}
+.make_search{
+	clear: both;
+}
+#advanced-search .form-action button{
+	margin-top: 0;
+	margin-left: 0;
+}
+#advanced-search .form-action{
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.checkbox input[type="checkbox"]{
+	width: 10px;
 }

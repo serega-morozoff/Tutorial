@@ -2,6 +2,7 @@
 function panels_hooks_panels_pane_content_alter($content, $pane, $args, $contexts) {
 	$panel_array = Array();
 	$panel_array = $pane->configuration;
+	global $user;
 	if(array_key_exists("admin_title", $panel_array)){
 		foreach($contexts as $context){
 			$data = $context->data;
@@ -41,11 +42,14 @@ function panels_hooks_panels_pane_content_alter($content, $pane, $args, $context
 				$logged = "<div class='is-logged'>" . $online . "</div>";
 			}
 			foreach($user_ -> roles as $key=>$role){
+				$role = t("Authenticated");
+				$status_class = "auth";
+				$status = "<div class='role " . $role_class . "'>" . $role . "</div>";
 				if($key > 2){
 					$role_class = strtolower($role);
 					$status = "<div class='role " . $role_class . "'>" . $role . "</div>";
 				}elseif($key == 2){
-					$role = t("Authentic");
+					$role = t("Authenticated");
 					$role_class = strtolower($role);					
 					$status = "<div class='role " . $role_class . "'>" . $role . "</div>";
 				}
@@ -68,17 +72,50 @@ function panels_hooks_panels_pane_content_alter($content, $pane, $args, $context
 			;
 			$result = $query->execute();
 			$count_accomodation = count($result['node']);
-			
-			$output = "<div class='search_form'>";
-			$tx = t('Show search form');
-			//$output .= '<a class="colorbox-node search_form" href="/search_form_rooms" data-href="/search_form_rooms?width=600&height=600">' . $tx . '</a>';
-			$output .= '<div class="link"><a class="search_form" href="/search_form_rooms" data-href="/search_form_rooms?width=600&height=600">' . $tx . '</a></div>';
-			$output .= "</div>";
-			$output .= "<div class='tenants front_page_module' id='search_module'>";
+			$output = "<div class='tenants front_page_module' id='search_module'>";
 			$output .= "</div>";
 			$output .= "<input type='hidden' id='all-property' value='" . $count . "'>";
 			$output .= "<input type='hidden' id='all-accomodation' value='" . $count_accomodation . "'>";
 			$content->content = $output;			
 		}
+		if($panel_array["admin_title"] == "My Image Gallery"){
+			$t=t("My Image Gallery");
+			$output = "<a href='/gallery/".$user->name."'>".$t."</a>";
+			$content->content = $output;						
+		}
+		if($panel_array["admin_title"] == "Payment History"){
+			$t=t("Payment History");
+			$output = "<a href='/user/payment'>".$t."</a>";
+			$content->content = $output;						
+		}		
+		if($panel_array["admin_title"] == "User Name"){
+			$user_ = user_load($user->uid);
+			if(count($user_->field_first_name) >0 && count($user_->field_last_name)>0){
+				$output = "<a href='/user/".$user->uid."/edit'>".$user_->field_first_name['und'][0]['value']." ".$user_->field_last_name['und'][0]['value']."</a>";
+			}else{
+				$output = "<a href='/user/".$user->uid."/edit'>".$user->name."</a>";
+			}
+			$content->content = $output;						
+		}			
+		if($panel_array["admin_title"] == "User account"){
+			$user_ = user_load($user->uid);
+			foreach($user_ -> roles as $key=>$role){
+				$status = t("authenticated");
+				$status_class = "auth";
+				$tooltip = t("Authenticated account. Please Upgrade your membership");
+				if($key > 2){
+					$status = $role;
+					$status_class = strtolower($status);
+					$tid = taxonomy_get_term_by_name($role);
+					$tooltip = "Administrator";
+					foreach($tid as $t){
+						$tooltip = $t->description;
+					}
+				}
+			}
+			$t = t("account");
+			$output = "<div class='user_role inline_block ".$status_class."'><span data-toggle='tooltip' title='$tooltip' >" . $status ." ".$t. "</span></div>";
+			$content->content = $output;						
+		}		
 	}
 }

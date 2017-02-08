@@ -112,10 +112,13 @@
 						<div class="menu nav navbar-nav secondary">
 							<div class="user info">
 								<?
+								if(count($user_detail->field_first_name) == 0){
+									$user_detail->field_first_name['und'][0]['value'] = ucfirst($user_detail->name);
+								}
 								if(strlen($user_detail->field_first_name['und'][0]['value']) > 6){
 									$user_detail->field_first_name['und'][0]['value'] = substr($user_detail->field_first_name['und'][0]['value'], 0, 3);
 									$user_detail->field_first_name['und'][0]['value'] .="...";
-								}
+								}								
 								?>
 								<?php print l("Welcome, ".$user_detail->field_first_name['und'][0]['value'],'user/'.$user->uid)?>
 							</div>
@@ -123,6 +126,12 @@
 								<?php print l("Logout","user/logout"); ?>
 							</div>
 						</div>
+						<div class="language">
+							<?php
+									$block = module_invoke('lang_dropdown', 'block_view', 'language');
+									print render($block['content']);		
+							?>
+						</div>						
 					<?}else{?>
 						<div class="not_login">
 							<div class="menu nav navbar-nav secondary">
@@ -133,6 +142,12 @@
 							<?php if (!empty($page['navigation'])): ?>
 								<?php print render($page['navigation']); ?>
 							<?php endif; ?>
+							<div class="language">
+								<?php
+										$block = module_invoke('lang_dropdown', 'block_view', 'language');
+										print render($block['content']);		
+								?>
+							</div>							
 						</div>
 					<? } ?>
         </nav>
@@ -198,8 +213,8 @@
     <?php endif; ?>
 
   </div>
-	<div class="container">
-		<?php if(!$user->uid && arg(0) == 'user' && !intval(arg(1))){?>
+	<div class="container features-register">
+		<?php if((!$user->uid && arg(0) == 'user' && !intval(arg(1)))||(arg(0) == 'upgrade-membership')){?>
 			<h2 class="features"><?php print t('Features of registered users'); ?></h2>
 		<?php } ?>
 			<?php print render($page['share']); ?>
